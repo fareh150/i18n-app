@@ -12,8 +12,9 @@ import { LanguageService } from '../../service/language.service';
 })
 export class LanguageSelectorComponent
 {
-  cookieService = inject(SsrCookieService);
   languageService = inject(LanguageService);
+
+  currentLang = this.languageService.currentLang;
 
   languages = signal([
     { code: 'en', flag: '🇺🇸' },
@@ -26,7 +27,6 @@ export class LanguageSelectorComponent
   {
     const target = event.target as HTMLSelectElement;
     const lang = target.value;
-    //this.cookieService.set('language', target.value);
 
     this.languageService.changeLang(lang);
   }
