@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { SsrCookieService } from 'ngx-cookie-service-ssr';
+import { LanguageService } from '../../service/language.service';
 
 @Component({
   selector: 'app-language-selector',
@@ -12,6 +13,7 @@ import { SsrCookieService } from 'ngx-cookie-service-ssr';
 export class LanguageSelectorComponent
 {
   cookieService = inject(SsrCookieService);
+  languageService = inject(LanguageService);
 
   languages = signal([
     { code: 'en', flag: '🇺🇸' },
@@ -23,10 +25,9 @@ export class LanguageSelectorComponent
   changeLanguage(event: Event)
   {
     const target = event.target as HTMLSelectElement;
-    const value = target.value;
-    this.cookieService.set('language', target.value);
+    const lang = target.value;
+    //this.cookieService.set('language', target.value);
 
-    console.log('Language changed to', {value});
-
+    this.languageService.changeLang(lang);
   }
 }
