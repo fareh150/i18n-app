@@ -13,7 +13,6 @@ export class LanguageService
 
   changeLang(lang: string)
   {
-
     this.cookie.set('lang', lang);
     this.translate.setDefaultLang(lang);
     this.translate.use(lang);
