@@ -4,6 +4,7 @@ import express from 'express';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import bootstrap from './src/main.server';
+import { SERVER_LANG_TOKEN } from './src/app/service/language.service';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -29,6 +30,8 @@ export function app(): express.Express {
   server.get('**', (req, res, next) => {
     const { protocol, originalUrl, baseUrl, headers } = req;
 
+    const lang = 'Español';
+
     commonEngine
       .render({
         bootstrap,
@@ -39,6 +42,7 @@ export function app(): express.Express {
           { provide: APP_BASE_HREF, useValue: baseUrl },
           { provide: 'REQUEST', useValue: req },
           { provide: 'RESPONSE', useValue: res },
+          { provide: SERVER_LANG_TOKEN, useValue: lang}
         ],
       })
       .then((html) => res.send(html))
